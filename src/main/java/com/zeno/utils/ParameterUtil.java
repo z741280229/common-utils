@@ -15,7 +15,7 @@ import java.util.List;
 public class ParameterUtil {
 
     /**
-     * 如果传入对象直接为空，那么直接返回true，如果对象当中只要存在某个字段为null，就返回true，其余返回false
+     * 如果传入对象直接为空，那么直接返回true，如果对象当中只要存在某个属性为null，就返回true，其余返回false
      *
      * @param obj
      * @return
@@ -32,6 +32,27 @@ public class ParameterUtil {
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    /**
+     * 判断是否存在参数为空
+     * @param objs
+     * @return
+     */
+    public static boolean parameterIsNull(Object... objs){
+        for (Object obj:objs) {
+            if (obj == null){
+                return true;
+            }
+            if (StringUtils.isBlank(obj.toString())){
+                return true;
+            }
+            if (parameterAllIsNull(obj)){
+                return true;
+            }
         }
         return false;
     }
@@ -116,6 +137,8 @@ public class ParameterUtil {
     }
 
 
+
+
     /**
      * 判断单个参数是否为空
      *
@@ -135,6 +158,29 @@ public class ParameterUtil {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     *判断对象所有参数是否为空
+     * @param obj
+     * @return
+     */
+    private static boolean parameterAllIsNull(Object obj) {
+        if (obj == null) {
+            return true;
+        }
+
+        try {
+            for (Field f : obj.getClass().getDeclaredFields()) {
+                if (!isNull(obj, f)) {
+                    return false;
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
 }

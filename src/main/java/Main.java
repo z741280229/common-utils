@@ -13,14 +13,15 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         User user = new User();
-        user.setName("");
+        user.setName("zeno");
         user.setGender("male");
-        //user.setAge(18);
+        user.setAge(18);
+        Integer num = new Integer(1);
 
         System.out.println(ParameterUtil.parameterIsNull(user));
         System.out.println(ParameterUtil.parameterIsNull(user,"name","age"));
-        System.out.println( Arrays.toString(ParameterUtil.findNullParam(user).toArray()));
+        System.out.println(Arrays.toString(ParameterUtil.findNullParam(user).toArray()));
         System.out.println(Arrays.toString(ParameterUtil.findNullParam(user,"name","age").toArray()));
-
+        System.out.println(ParameterUtil.parameterIsNull("zeno",num,user));
     }
 }
